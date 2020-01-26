@@ -1,13 +1,21 @@
 function rpsGame(yourChoice) {
-    let humanChoice, botChoice;
+    //membuat variabel human dan bot
+    var humanChoice, botChoice;
     humanChoice = yourChoice.id // player memilih yg mengambil dari id
-
+    // bot memiliki nilai yg random
     botChoice = numberToChoice(randToRpsInt())
 
-    results = decideWinner(humanChoice, botChoice);
+    //  menampilkan yg dipilih
+    results = decideWinner(humanChoice, botChoice); // [0,1] bot won
+    // console.log(results)
 
-    message = finalMessage(results); 
+    message = finalMessage(results);
     console.log(message)
+    // menampilkan hasil dari mengambil id pada html 
+    var resultDiv = document.getElementById('result')
+    console.log(resultDiv)
+    resultDiv.innerHTML = message.message
+
 
     rpsFrontEnd = (yourChoice.id, botChoice, message)
 }
@@ -19,9 +27,9 @@ function randToRpsInt() {
 function numberToChoice(number) {
     return ['rock', 'scissors', 'paper'][number];
 }
-// ! ?
+
 function decideWinner(yourChoice, botChoice) {
-    let rpsDatabase = {
+    var rpsDatabase = {
         'rock': {
             'scissors': 1,
             'rock': 0.5,
@@ -39,21 +47,22 @@ function decideWinner(yourChoice, botChoice) {
         }
 
     }
-    let yourScore = rpsDatabase[yourChoice][botChoice];
-    let botScore = rpsDatabase[botChoice][yourChoice];
+    // yourscore menyimpan data 
+    var yourScore = rpsDatabase[yourChoice][botChoice];
+    var botScore = rpsDatabase[botChoice][yourChoice];
 
     return [yourScore, botScore]
 }
 
 function finalMessage([yourScore, botScore]) {
-    if (yourScore === botScore) {
+    if (yourScore < botScore) {
         return {
             'message': 'You Lost!',
             'color': 'red'
         };
     } else if (yourScore === botScore) {
         return {
-            'message': "You Tie!",
+            'message': "Draw",
             'color': 'yellow'
         }
     } else {
@@ -64,29 +73,3 @@ function finalMessage([yourScore, botScore]) {
     }
 }
 
-function rpsFrontEnd(humanImageChoice, botImageChoice, finalMessage) {
-    let imagesDatabase = {
-        'rock': document.getElementById('rock').src,
-        'paper': document.getElementById('paper').src,
-        'scissors': document.getElementById('scissors').src
-    }
-
-    // remove the image
-    document.getElementById('rock').remove();
-    document.getElementById('paper').remove();
-    document.getElementById('scissors').remove();
-
-    let humanDiv = document.createElement('div');
-    let botDiv = document.createElement('div');
-    let messageDiv = document.createElement('div');
-
-
-    humanDiv.innerHTML = "<img src='" + imagesDatabase[humanImageChoice] + "' height=150 width=150> style='box-shadow: 0px 10px 50px rgba(37,50,233,1);'>"
-    messageDiv.innerHTML = "<h2 style='color: " + finalMessage['color'] + "font-size: 60px; padding:30px;'>" + finalMessage['message'] + "</h2>"
-    botDiv.innerHTML = "<img src='" + imagesDatabase[botImageChoice] + "' height=150 width=150> style='box-shadow: 0px 10px 50px rgba(37,50,233,1);'>"
-
-
-    document.getElementById('gambar-suit').appendChild(humanDiv);
-    document.getElementById('gambar-suit').appendChild(messageDiv);
-    document.getElementById('gambar-suit').appendChild(botDiv);
-}

@@ -1,0 +1,23 @@
+.container {
+    border: 1px solid black;
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.gambar {
+    display: flex;
+    padding: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+.gambar img:hover {
+    box-shadow: 0px 10px 50px red;
+}
+
+h1 {
+    color: red;
+}
